@@ -1,4 +1,4 @@
-package cz.martinforejt.nim.app
+package cz.martinforejt.nim.game
 
 /**
  * Created by Martin Forejt on 19.11.2019.

@@ -1,8 +1,10 @@
 package cz.martinforejt.nim.app
 
+import cz.martinforejt.nim.com.cmd.CmdCommunicator
 import cz.martinforejt.nim.core.NimSolver
 import cz.martinforejt.nim.core.comb.CombNimSolver
 import cz.martinforejt.nim.core.minimax.MinimaxNimSolver
+import cz.martinforejt.nim.game.NimGame
 
 /**
  * Start point of application
@@ -14,16 +16,22 @@ import cz.martinforejt.nim.core.minimax.MinimaxNimSolver
  * @author Martin Forejt
  */
 fun main(args: Array<String>) {
-    val cmdArgs = CmdParser.parseCmdLine(args)
-    if (cmdArgs.help) printHelp()
-    val solver = createSolver(cmdArgs.alg)
+    val communicator = CmdCommunicator()
+    val configuration = communicator.parseCmdLine(args)
 
+    if (configuration.help) {
+        communicator.showHelp()
+    }
+
+    val solver = createSolver(configuration.alg)
     val game = NimGame(
-        state = cmdArgs.state,
-        player = cmdArgs.player,
+        state = configuration.state,
+        player = configuration.player,
         solver = solver,
-        type = cmdArgs.type
+        type = configuration.type,
+        communicator = communicator
     )
+
     game.start()
 }
 

@@ -1,6 +1,7 @@
-package cz.martinforejt.nim.app
+package cz.martinforejt.nim.com.cmd
 
-import kotlin.random.Random
+import cz.martinforejt.nim.data.Configuration
+import cz.martinforejt.nim.game.GameType
 
 /**
  * Utility for parsing cmd arguments
@@ -13,23 +14,21 @@ import kotlin.random.Random
 object CmdParser {
 
     /**
-     * Parse cmd arguments to [CmdArgs] (filled with default values)
+     * Parse cmd arguments to [Configuration] (filled with default values)
      *
      * @param args
      * @return
      */
-    fun parseCmdLine(args: Array<String>): CmdArgs {
-        var cmdArgs = CmdArgs()
+    fun parseCmdLine(args: Array<String>): Configuration {
+        var config = Configuration()
 
         var i = 0
-        var arg: String
-
         while (i < args.size && args[i].startsWith("-")) {
-            arg = args[i++]
+            val arg = args[i++]
             if (arg == "-type") {
                 if (i < args.size) {
                     try {
-                        cmdArgs = cmdArgs.copy(type = GameType.values()[args[i++].toInt() - 1])
+                        config = config.copy(type = GameType.values()[args[i++].toInt() - 1])
                     } catch (e: NumberFormatException) {
                         throw IllegalArgumentException("Bad type argument. Try -help to see options.")
                     } catch (e2: IndexOutOfBoundsException) {
@@ -39,18 +38,18 @@ object CmdParser {
             } else if (arg == "-state") {
                 if (i < args.size) {
                     try {
-                        cmdArgs = cmdArgs.copy(state = args[i++].split(",").map { it.toInt() }.toIntArray())
+                        config = config.copy(state = args[i++].split(",").map { it.toInt() }.toIntArray())
                     } catch (e: java.lang.NumberFormatException) {
                         throw IllegalArgumentException("Bad state argument. Try -help to see options.")
                     }
                 } else throw IllegalArgumentException("-state requires state. Try -help to see options.")
             } else if (arg == "-help") {
-                cmdArgs = cmdArgs.copy(help = true)
+                config = config.copy(help = true)
             } else if (arg == "-alg") {
                 if (i < args.size) {
                     try {
-                        cmdArgs = cmdArgs.copy(alg = args[i++].toInt())
-                        if (cmdArgs.alg <= 0 || cmdArgs.alg >= 3) throw IllegalArgumentException("Bad algorithm argument. Try -help to see options.")
+                        config = config.copy(alg = args[i++].toInt())
+                        if (config.alg <= 0 || config.alg >= 3) throw IllegalArgumentException("Bad algorithm argument. Try -help to see options.")
                     } catch (e: NumberFormatException) {
                         throw IllegalArgumentException("Bad algorithm type argument. Try -help to see options.")
                     }
@@ -58,8 +57,8 @@ object CmdParser {
             } else if (arg == "-start") {
                 if (i < args.size) {
                     try {
-                        cmdArgs = cmdArgs.copy(player = args[i++].toInt())
-                        if (cmdArgs.player != 1 && cmdArgs.player != -1) throw IllegalArgumentException("Bad start player argument. Try -help to see options.")
+                        config = config.copy(player = args[i++].toInt())
+                        if (config.player != 1 && config.player != -1) throw IllegalArgumentException("Bad start player argument. Try -help to see options.")
                     } catch (e: NumberFormatException) {
                         throw IllegalArgumentException("Bad start player argument. Try -help to see options.")
                     }
@@ -69,23 +68,6 @@ object CmdParser {
             }
         }
 
-        return cmdArgs
+        return config
     }
-
-    /**
-     * Cmd arguments holder
-     *
-     * @property type
-     * @property state
-     * @property help
-     * @property alg
-     */
-    @Suppress("ArrayInDataClass")
-    data class CmdArgs(
-        val type: GameType = GameType.ROBOT_V_ROBOT,
-        val state: IntArray = intArrayOf(3, 4, 5),
-        val help: Boolean = false,
-        val alg: Int = 1,
-        val player: Int = if (Random.nextInt() > 0) 1 else -1
-    )
 }
