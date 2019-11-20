@@ -46,11 +46,21 @@ class CmdCommunicator : Communicator {
      * @param state
      */
     override fun showCurrentState(state: IntArray) {
+        showCurrentState(state, true)
+    }
+
+    /**
+     * Print current state with optional new line
+     *
+     * @param state
+     * @param newLine
+     */
+    private fun showCurrentState(state: IntArray, newLine: Boolean) {
         print("Current state is: ")
         for (i in 0 until state.size) {
             print(state[i].toString() + " ")
         }
-        println()
+        if (newLine) println()
     }
 
     /**
@@ -61,6 +71,22 @@ class CmdCommunicator : Communicator {
      */
     override fun showMove(player: Int, move: NimMove) {
         println(player.playerStr() + " removes " + move.remove + " from pile " + (move.pile + 1))
+    }
+
+    /**
+     * Show best move for current state
+     *
+     * @param move
+     */
+    override fun showBestMove(move: NimMove?, state: IntArray) {
+        if (move != null) {
+            print("Best move for state ")
+            showCurrentState(state, false)
+            print("is removing " + move.remove + " from pile " + (move.pile + 1))
+            println()
+        } else {
+            println("You cant win from this position wait for opponent mistake")
+        }
     }
 
     /**

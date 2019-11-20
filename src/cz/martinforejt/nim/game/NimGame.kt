@@ -21,9 +21,32 @@ class NimGame(
 ) {
 
     /**
-     * Start the game
+     * Start
      */
     fun start() {
+        if (type == GameType.BEST_MOVE) {
+            startBestMove()
+        } else {
+            startGame()
+        }
+    }
+
+    /**
+     * Start best move
+     */
+    private fun startBestMove() {
+        player = 1
+        if (makePrediction() == player) {
+            communicator.showBestMove(robotMove(), state)
+        } else {
+            communicator.showBestMove(null, state)
+        }
+    }
+
+    /**
+     * Start the game
+     */
+    private fun startGame() {
         communicator.onGameStart(player, state, solver.javaClass.simpleName)
         communicator.showPrediction(makePrediction())
 

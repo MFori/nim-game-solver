@@ -19,7 +19,7 @@ import kotlin.random.Random
  */
 @Suppress("ArrayInDataClass")
 data class Configuration(
-    val type: GameType = GameType.ROBOT_V_ROBOT,
+    val type: GameType = GameType.BEST_MOVE,
     val state: IntArray = intArrayOf(3, 4, 5),
     val help: Boolean = false,
     val alg: Int = 1,

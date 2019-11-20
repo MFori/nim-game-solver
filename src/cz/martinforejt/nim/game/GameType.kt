@@ -10,6 +10,7 @@ enum class GameType {
 
     ROBOT_V_ROBOT,
     ROBOT_V_HUMAN,
-    HUMAN_V_HUMAN
+    HUMAN_V_HUMAN,
+    BEST_MOVE
 
 }

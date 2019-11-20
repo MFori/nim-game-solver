@@ -42,6 +42,13 @@ interface Communicator {
     fun showMove(player: Int, move: NimMove)
 
     /**
+     * Show best move for current state
+     *
+     * @param move
+     */
+    fun showBestMove(move: NimMove?, state: IntArray)
+
+    /**
      * Read move from player
      *
      * @param state
