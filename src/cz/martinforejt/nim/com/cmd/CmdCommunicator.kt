@@ -46,7 +46,7 @@ class CmdCommunicator : Communicator {
      * @param state
      */
     override fun showCurrentState(state: IntArray) {
-        showCurrentState(state, true)
+        showCurrentState(state, newLine = true, prefix = true)
     }
 
     /**
@@ -55,8 +55,8 @@ class CmdCommunicator : Communicator {
      * @param state
      * @param newLine
      */
-    private fun showCurrentState(state: IntArray, newLine: Boolean) {
-        print("Current state is: ")
+    private fun showCurrentState(state: IntArray, newLine: Boolean, prefix: Boolean) {
+        if (prefix) print("Current state is: ")
         for (i in 0 until state.size) {
             print(state[i].toString() + " ")
         }
@@ -81,7 +81,7 @@ class CmdCommunicator : Communicator {
     override fun showBestMove(move: NimMove?, state: IntArray) {
         if (move != null) {
             print("Best move for state ")
-            showCurrentState(state, false)
+            showCurrentState(state, newLine = false, prefix = false)
             print("is removing " + move.remove + " from pile " + (move.pile + 1))
             println()
         } else {
