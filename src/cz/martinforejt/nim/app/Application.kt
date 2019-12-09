@@ -19,20 +19,22 @@ fun main(args: Array<String>) {
     val communicator = CmdCommunicator()
     val configuration = communicator.parseCmdLine(args)
 
-    if (configuration.help) {
+    if (configuration.help || configuration.state == null) {
         communicator.showHelp()
     }
 
-    val solver = createSolver(configuration.alg)
-    val game = NimGame(
-        state = configuration.state,
-        player = configuration.player,
-        solver = solver,
-        type = configuration.type,
-        communicator = communicator
-    )
+    configuration.state?.let {
+        val solver = createSolver(configuration.alg)
+        val game = NimGame(
+            state = it,
+            player = configuration.player,
+            solver = solver,
+            type = configuration.type,
+            communicator = communicator
+        )
 
-    game.start()
+        game.start()
+    }
 }
 
 /**

@@ -19,7 +19,7 @@ fun printHelp() {
     println("*          -type 3 => human vs human                                *")
     println("*          -type 4 => find best move (default)                      *")
     println("* -state defines starting piles state:                              *")
-    println("*          -state 3,4,5 => 3 piles with 3,4 and 5 stones (default)   *")
+    println("*          -state 3,4,5 => 3 piles with 3,4 and 5 stones            *")
     println("* -alg defines nim solver algorithm:                                *")
     println("*          -alg 1 => combinatorial algorithm (default)              *")
     println("*          -alg 2 => minimax algorithm (default)                    *")

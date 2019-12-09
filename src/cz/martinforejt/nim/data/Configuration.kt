@@ -20,7 +20,7 @@ import kotlin.random.Random
 @Suppress("ArrayInDataClass")
 data class Configuration(
     val type: GameType = GameType.BEST_MOVE,
-    val state: IntArray = intArrayOf(3, 4, 5),
+    val state: IntArray? = null,
     val help: Boolean = false,
     val alg: Int = 1,
     val player: Int = if (Random.nextInt() > 0) 1 else -1
